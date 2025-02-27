@@ -24,7 +24,7 @@ fun main(args: Array<String>) {
 
     inputByteStream.forEach {
         when (it) {
-            '\n'.code   -> output.write(PONG_MESSAGE.toByteArray())
+            '+'.code   -> output.write(PONG_MESSAGE.toByteArray())
         }
     }
 }
