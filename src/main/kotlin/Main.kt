@@ -12,7 +12,19 @@ fun main(args: Array<String>) {
     val clientSocket = serverSocket.accept()
     println("accepted new connection from ${clientSocket.remoteSocketAddress}")
 
+    val input = clientSocket.getInputStream()
     val output = clientSocket.getOutputStream()
 
-    output.write(PONG_MESSAGE.toByteArray())
+    val inputByteStream = generateSequence {
+        when (val i = input.read()) {
+            -1      -> null
+            else    -> i
+        }
+    }
+
+    inputByteStream.forEach {
+        when (it) {
+            '\n'.code   -> output.write(PONG_MESSAGE.toByteArray())
+        }
+    }
 }
